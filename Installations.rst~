@@ -1,3 +1,7 @@
+=================
+**INSTALLATIONS**
+=================
+
 Hadoop Installation
 ------------------
 | Since the main aim of our project is to determine which student is gaming , we achieve this by parsing the log files generated at the server side when a student is taking a course on Edx.Log entries are generated on a massive scale , so we cant process it on normat DBMS. For that we need to install hadoop which is a mapreduce system.The approach taken by MapReduce may seem like a brute-force approach. The premise
