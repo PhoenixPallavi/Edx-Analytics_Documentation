@@ -1,0 +1,57 @@
+Hadoop Installation
+------------------
+| Since the main aim of our project is to determine which student is gaming , we achieve this by parsing the log files generated at the server side when a student is taking a course on Edx.Log entries are generated on a massive scale , so we cant process it on normat DBMS. For that we need to install hadoop which is a mapreduce system.The approach taken by MapReduce may seem like a brute-force approach. The premise
+is that the entire dataset—or at least a good portion of it—is processed for each query.But this is its power. MapReduce is a batch query processor, and the ability to run an ad hoc query against your whole dataset and get the results in a reasonable time is transformative. 
+Hadoop’s HDFS is a highly fault-tolerant distributed file system and, like Hadoop in general, designed to be deployed on low-cost hardware. It provides high throughput access to application data and is suitable for applications that have large data sets. For that we installed hadoop in two different scenario:-
+
+:Standalone:
+             
+* By default, Hadoop is configured to run in a non-distributed or standalone mode
+* HDFS is not utilized in this mode.
+* Local file system is used for input and output
+* There are no daemons running and everything runs in a single JVM instance.
+* No Custom Configuration is required in 3 hadoop(mapred-site.xml,core-site.xml, hdfs-site.xml) files.
+* Standalone mode is much faster than Pseudo-distributed mode.
+
+
+:Multinode:
+
+* This is a Production Phase
+* Data are used and distributed across many nodes.
+* Different Nodes will be used as  Master Node / Data Node / Job Tracker / Task Tracker
+* The Hadoop daemons run on a local machine, and the cluster is simulated on all the machines included in cluster.
+Prerequisites
+ for hadoop installation is  a working Java 1.5+ (aka Java 5) installation.For installation procedure of hadoop , refer to the above topics.
+
+
+HIVE installation
+------------------
+
+
+| Hive was created to make it possible for analysts with strong SQL skills (but meagerJava programming skills) to run queries on the huge volumes of data . Hive is used by many organizations as a general-purpose, scalable data processing platform.SQL is the lingua franca in s intelligence tools (ODBC is a common bridge, for example), so Hive is well placed to integrate with these products .Hive runs on our workstation and converts  SQL query into a series of MapReduce jobs for execution on a Hadoop cluster. Hive organizes data into tables,
+which provide a means for attaching structure to data stored in HDFS. Metadata such as table schemas—is stored in a database called the metastore.
+
+| Installation of Hive is straightforward. Java 6 is a prerequisite.You also need to have the same version of Hadoop installed locally that your cluster is running. Of course, we may choose to run Hadoop locally,either in standalone or multinode mode, while getting started with Hive.The proper procedure for installing hive is mentioned in the above topics.
+
+| Hive provides several services that you can run using the hive command.Out of those , we have used hiveserver service of hive to connect the JAVA program to HIVE using JDBC driver.
+
+
+
+Sqoop Installation
+------------------
+        
+| Sqoop is an open-source tool that allows users to extract data from a relational database into Hadoop for further processing.
+This processing can be done with MapReduce programs or other higher-level tools such as Hive.When the final results of an analytic pipeline are available, Sqoop can export these results back to the database for consumption by other clients.The proper procedure for installation of sqoop is mentioned above.
+
+| We have basically used sqoop for importing data from SQL into HIVE.We have used two different command for import.One is to import a single table and the other one is the import of the whole database.
+        
+.. image:: pik2.png
+
+Research paper study
+----------------------
+
+After all the installation procedures, we studied the research paper, “Detecting Student Misuse of Intelligent Tutoring Systems” authored by Ryan Shaun Baker, Albert T. Corbett, Kenneth R. Koedinger and gave a presentation on it. Their study says that students who are averted to such ‘gaming the system behaviour’ (behavior aimed at obtaining correct answers and advancing within the tutoring curriculum by systematically taking advantage of regularities in the software’s feedback and help) learn 2/3rds as much as similar students who do not engage in such behaviors. They came up with a machine-learned latent response model that can identify whether a student is gaming the system or not. Based on these predictions, the tutor can be re-designed for such students and make their learning process effective.
+
+Baker and his colleagues found that a student’s frequency of gaming was strongly negatively correlated with learning. According to them, understanding why students game the system will be essential in deciding how the system should respond. Ultimately, though, whatever remediation approach is chosen, it is likely to have costs as well as benefits. For instance, preventive approaches, such as changing interface widgets to make them more difficult to game or delaying successive levels of help to prevent rapid-fire usage, may reduce gaming, but at the cost of making the tutor more frustrating and less time-efficient for other students. Since many students use help effectively and seldom or never game the system, the costs of using such an approach indiscriminately may be higher than the rewards. Whichever approach we take to remediating gaming the system, the success of that approach is likely to depend on accurately and automatically detecting which students are gaming the system and which are not.
+
+The LRM they suggested, takes 24 features as input or data source and also the predetermined value of the student ‘gaming or not’ of a training set of 70 students. Then it uses forward selection for model selection and then finally implements iterative gradient descent to find the best model parameters. The best-fitting model had 4 parameters, and no model considered had more than 6 parameters. They also used a cross-validation techninque, LOOCV (Leave One Out Cross Validation). Finally with the ROC (Receiver Operating Characteristic) curve, they classified the student as gaming or not gaming. On this result, they applied the interventions in the ITS.
